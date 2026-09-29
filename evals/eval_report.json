@@ -1,0 +1,219 @@
+{
+  "tasks": [
+    {
+      "id": "stock-check",
+      "task": "How many units of HX-1042 (Vista Outdoor Cam) are in stock?",
+      "pass": true,
+      "checks": {
+        "tools": true,
+        "args": true,
+        "arg_detail": {
+          "check_inventory": true
+        },
+        "answer_contains": true,
+        "answer_not_contains": true,
+        "side_effect": true
+      },
+      "steps": [
+        {
+          "tool": "check_inventory",
+          "args": {
+            "product_id": "HX-1042"
+          },
+          "ok": true
+        }
+      ],
+      "answer": "HX-1042 has 17 units in stock."
+    },
+    {
+      "id": "cheapest-lock-order",
+      "task": "Buy 2 of the cheapest in-stock smart lock for customer C-103.",
+      "pass": true,
+      "checks": {
+        "tools": true,
+        "args": true,
+        "arg_detail": {
+          "place_order": true
+        },
+        "answer_contains": true,
+        "answer_not_contains": true,
+        "side_effect": true
+      },
+      "steps": [
+        {
+          "tool": "search_products",
+          "args": {
+            "category": "Smart Locks",
+            "in_stock_only": true,
+            "limit": 50
+          },
+          "ok": true
+        },
+        {
+          "tool": "place_order",
+          "args": {
+            "customer_id": "C-103",
+            "items": [
+              {
+                "product_id": "HX-1014",
+                "quantity": 2
+              }
+            ]
+          },
+          "ok": true
+        }
+      ],
+      "answer": "Order ORD-5009 placed for C-103: 2\u00d7 HX-1014 @ $119.00. Total $238.00."
+    },
+    {
+      "id": "order-status",
+      "task": "What is the status of customer C-104's most recent order?",
+      "pass": true,
+      "checks": {
+        "tools": true,
+        "args": true,
+        "arg_detail": {
+          "list_orders": true
+        },
+        "answer_contains": true,
+        "answer_not_contains": true,
+        "side_effect": true
+      },
+      "steps": [
+        {
+          "tool": "list_orders",
+          "args": {
+            "customer_id": "C-104",
+            "limit": 5
+          },
+          "ok": true
+        },
+        {
+          "tool": "get_order",
+          "args": {
+            "order_id": "ORD-5005"
+          },
+          "ok": true
+        }
+      ],
+      "answer": "Order ORD-5005 (C-104) is **processing**: 1\u00d7 HX-1023 \u2014 total $59.00."
+    },
+    {
+      "id": "low-stock-report",
+      "task": "Which products are low on stock (fewer than 5 units)?",
+      "pass": true,
+      "checks": {
+        "tools": true,
+        "args": true,
+        "arg_detail": {},
+        "answer_contains": true,
+        "answer_not_contains": true,
+        "side_effect": true
+      },
+      "steps": [
+        {
+          "tool": "resource:inventory://low-stock",
+          "args": {},
+          "ok": true
+        }
+      ],
+      "answer": "Products low on stock (under 5 units):\n- HX-1013 Latch Keypad Deadbolt: 3 units\n- HX-1022 Glow BR30 Bulb (2-pack): 2 units\n- HX-1033 Sense Water Leak Sensor: 4 units\n- HX-1044 Vista Floodlight Cam: 1 units"
+    },
+    {
+      "id": "open-ticket",
+      "task": "Open a support ticket for customer C-102: \"Doorbell camera offline after storm\".",
+      "pass": true,
+      "checks": {
+        "tools": true,
+        "args": true,
+        "arg_detail": {
+          "open_ticket": true
+        },
+        "answer_contains": true,
+        "answer_not_contains": true,
+        "side_effect": true
+      },
+      "steps": [
+        {
+          "tool": "open_ticket",
+          "args": {
+            "customer_id": "C-102",
+            "subject": "Doorbell camera offline after storm\"."
+          },
+          "ok": true
+        }
+      ],
+      "answer": "Opened ticket TCK-9003 for C-102: \"Doorbell camera offline after storm\".\" (priority normal)."
+    },
+    {
+      "id": "unknown-product",
+      "task": "What is the price of product HX-9999?",
+      "pass": true,
+      "checks": {
+        "tools": true,
+        "args": true,
+        "arg_detail": {
+          "check_inventory": true
+        },
+        "answer_contains": true,
+        "answer_not_contains": true,
+        "side_effect": true
+      },
+      "steps": [
+        {
+          "tool": "check_inventory",
+          "args": {
+            "product_id": "HX-9999"
+          },
+          "ok": false
+        }
+      ],
+      "answer": "I couldn't find product HX-9999: ERROR: product 'HX-9999' not found I don't have pricing for it, so I can't quote one."
+    },
+    {
+      "id": "cheapest-bulbs-order",
+      "task": "Customer C-106 wants 3 smart bulbs. Find the cheapest in-stock option and place the order.",
+      "pass": true,
+      "checks": {
+        "tools": true,
+        "args": true,
+        "arg_detail": {
+          "place_order": true
+        },
+        "answer_contains": true,
+        "answer_not_contains": true,
+        "side_effect": true
+      },
+      "steps": [
+        {
+          "tool": "search_products",
+          "args": {
+            "category": "Smart Lighting",
+            "in_stock_only": true,
+            "limit": 50
+          },
+          "ok": true
+        },
+        {
+          "tool": "place_order",
+          "args": {
+            "customer_id": "C-106",
+            "items": [
+              {
+                "product_id": "HX-1025",
+                "quantity": 3
+              }
+            ]
+          },
+          "ok": true
+        }
+      ],
+      "answer": "Order ORD-5009 placed for C-106: 3\u00d7 HX-1025 @ $24.00. Total $72.00."
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0
+  }
+}
