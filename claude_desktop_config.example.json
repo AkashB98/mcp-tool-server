@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "helios-home": {
+      "command": "python",
+      "args": ["/path/to/mcp-tool-server/mcp_server.py", "--trace", "/path/to/mcp-tool-server/trace.jsonl"],
+      "env": {
+        "HELIOS_API_KEY": "helios-demo-key"
+      }
+    }
+  }
+}
